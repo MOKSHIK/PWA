@@ -1,0 +1,8 @@
+query getEmployees() {
+        id_coloumn
+        emp_no
+        emp_name
+        dob
+        contact_no
+        percentage
+}
