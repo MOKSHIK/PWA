@@ -15,6 +15,14 @@ module.exports = targets => {
         });
         return routes;
     });
+    targets.of('@magento/venia-ui').routes.tap(routes => {
+        routes.push({
+            name: 'product-inquiry',
+            pattern: '/employee.html/edituser.html',
+            path: require.resolve('@ascendlearning/employee/src/edituser')
+        });
+        return routes;
+    });
     targets.of('@magento/pwa-buildpack').specialFeatures.tap(flags => {
         flags['@ascendlearning/employee'] = {
             esModules: true,

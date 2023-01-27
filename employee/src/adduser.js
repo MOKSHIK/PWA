@@ -2,34 +2,35 @@ import { useMutation } from '@apollo/client';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import EMP_ADD from '../talons/empAdd.gql';
+import { Link } from 'react-router-dom';
 const adduser = () => {
+    const [shouldSubmit, setShouldSubmit] = useState(false);
     const [addFormData, setAddFormData] = useState({
-        id_column: '',
         emp_no: '',
         emp_name: '',
         dob: '',
         contact_no: ''
     });
+    const [runQuery, { called, data, loading, error }] = useMutation(EMP_ADD, {
+        fetchPolicy: 'no-cache',
+        nextFetchPolicy: 'cache-first',
+        variables: {
+            contactNo: addFormData.contact_no,
+            dob: addFormData.dob,
+            empName: addFormData.emp_name,
+            empNo: addFormData.emp_no
+        }
+    });
+
+    useEffect(() => {
+        if (shouldSubmit) {
+            runQuery();
+        }
+    }, [shouldSubmit]);
+
     const handleAddFormSubmit = event => {
         event.preventDefault();
-        const [runQuery, { called, data, loading, error }] = useMutation(
-            EMP_ADD,
-            {
-                fetchPolicy: 'cache-and-network',
-                nextFetchPolicy: 'cache-first',
-                variables: {
-                    contactNo: addFormData.contact_no,
-                    dob: addFormData.dob,
-                    empName: addFormData.emp_name,
-                    empNo: addFormData.emp_no,
-                    idColumn: addFormData.id_column
-                }
-            }
-        );
-
-        useEffect(() => {
-            runQuery();
-        }, []);
+        setShouldSubmit(true);
     };
     const handleAddFormChange = event => {
         event.preventDefault();
@@ -45,17 +46,8 @@ const adduser = () => {
 
     return (
         <div>
-            <h2>Add a Contact</h2>
+            <h2>Add a Employee</h2>
             <form onSubmit={handleAddFormSubmit}>
-                <div>
-                    <input
-                        type="number"
-                        name="id_column"
-                        required="required"
-                        placeholder="Enter ID_column"
-                        onChange={handleAddFormChange}
-                    />
-                </div>
                 <div>
                     <input
                         type="number"
@@ -92,7 +84,7 @@ const adduser = () => {
                         onChange={handleAddFormChange}
                     />
                 </div>
-                <button type="submit">Add</button>
+                <button type="submit">ADD USER</button>
             </form>
         </div>
     );
