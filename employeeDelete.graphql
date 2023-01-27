@@ -1,0 +1,5 @@
+mutation EmployeeDelete($idColumn: Int!) {
+    employeeDelete(idColumn: $idColumn) {
+        id_column
+    }
+}

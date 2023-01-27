@@ -1,0 +1,17 @@
+mutation(
+    $contactNo: Int
+    $dob: String
+    $empName: String
+    $empNo: Int
+    $idColumn: Int
+) {
+    employeeAdd(
+        input: {
+            empNo: $empNo
+            empName: $empName
+            dob: $dob
+            contactNo: $contactNo
+            idColumn: $idColumn
+        }
+    )
+}
