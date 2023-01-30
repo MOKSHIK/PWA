@@ -2,8 +2,9 @@ import { useMutation } from '@apollo/client';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import EMP_ADD from '../talons/empAdd.gql';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 const adduser = () => {
+    let history = useHistory();
     const [shouldSubmit, setShouldSubmit] = useState(false);
     const [addFormData, setAddFormData] = useState({
         emp_no: '',
@@ -28,8 +29,8 @@ const adduser = () => {
         }
     }, [shouldSubmit]);
 
-    const handleAddFormSubmit = event => {
-        event.preventDefault();
+    const handleAddFormSubmit = async event => {
+        await event.preventDefault();
         setShouldSubmit(true);
     };
     const handleAddFormChange = event => {
@@ -42,6 +43,11 @@ const adduser = () => {
         newFormData[fieldName] = fieldValue;
 
         setAddFormData(newFormData);
+    };
+    const handleButtonClick = async event => {
+        await handleAddFormSubmit(event);
+        history.push(`/employee.html`);
+        window.location.reload();
     };
 
     return (
@@ -84,7 +90,9 @@ const adduser = () => {
                         onChange={handleAddFormChange}
                     />
                 </div>
-                <button type="submit">ADD USER</button>
+                <button type="submit" onClick={handleButtonClick}>
+                    ADD USER
+                </button>
             </form>
         </div>
     );

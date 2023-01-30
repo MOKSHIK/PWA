@@ -44,6 +44,7 @@ const Inquiry = props => {
             variables: { idColumn: id_column },
             refetchQueries: [{ query: EMP_SEARCH }]
         });
+        window.location.reload();
     };
 
     const handleEditClick = id_column => {
